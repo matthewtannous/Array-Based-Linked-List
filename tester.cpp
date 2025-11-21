@@ -15,6 +15,9 @@
      Program terminates normally and returns 0.
 
   All memory allocation happens inside a fixed-size NodePool.
+
+  NOTE: The program assumes all values to be inserted into the list are of type
+        ElementType. 
 ------------------------------------------------------------------------------*/
 
 #include <iostream>
@@ -143,7 +146,7 @@ int main()
             return 0;
 
         default: // Invalid choice
-            cout << "Invalid option.try again.\n";
+            cerr << "Invalid option.try again.\n";
         }
     }
     return 0;
@@ -153,16 +156,16 @@ int main()
 void displayMenu()
 {
     cout << "\n=== Array-Based List Tester ===\n"
-         << "1. Insert at Position (Does not insert if list is full)\n"
+         << "1.  Insert at Position (Does not insert if list is full)\n"
          << "2. Force Insert at Position"
          << " (Deletes first element if list is full)\n"
-         << "3. Delete at Position\n"
-         << "4. Search for a Value\n"
-         << "5. Display List\n"
-         << "6. Check if List is Empty\n"
-         << "7. Get list size\n"
-         << "8. display free Nodes\n"
-         << "9. Sort List\n"
+         << "3.  Delete at Position\n"
+         << "4.  Search for a Value\n"
+         << "5.  Display List\n"
+         << "6.  Check if List is Empty\n"
+         << "7.  Get list size\n"
+         << "8.  display free Nodes\n"
+         << "9.  Sort List\n"
          << "10. Exit\n"
          << "Choose an option: ";
 }

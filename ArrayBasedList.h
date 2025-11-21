@@ -5,12 +5,14 @@
     Basic operations are:
         Constructor: Constructs an empty list.
         isEmpty: Check if list is empty.
-        insertAtPosition: insert node with data in the list at specified
+        insertAtPosition: Insert node with data in the list at specified
                           position.
-        deleteAtPosition: delete node at specified position.
+        deleteAtPosition: Delete node at specified position.
         search: Search for specified data in the list.
-        display: print list content.
-        displayFreeNodes: print free nodes' positions in the NodePool.
+        display: Print list content.
+        displayFreeNodes: Print free nodes' positions in the NodePool.
+        sort: Sorts the list in ascending order.
+        size: Returns the size of the list.
 
     Class Invariant:
         1. The list elements are stored in positions 0, 1,..., CAPACITY - 1
@@ -341,6 +343,7 @@ void ArrayBasedList<ElementType>::sort()
 {
     if (first != NULL_INDEX)
     {
+        // Get list size
         int size = 0; // size of the list
 
         // Loop through the entire list
@@ -349,6 +352,7 @@ void ArrayBasedList<ElementType>::sort()
             size++;
         }
 
+        // Sort list elements
         for (int i = 0; i < size - 1; i++)
         {
             // Loop through the entire list
@@ -357,7 +361,7 @@ void ArrayBasedList<ElementType>::sort()
                 if (nodePool.getNodeData(i) >
                     nodePool.getNodeData(nodePool.getNextOfNode(i))) // pool[i] > pool[i + 1]
                 {
-                    // switch
+                    // switch node i with node i + 1
                     nodePool.switchOrderOfNodes(i, nodePool.getNextOfNode(i));
                 }
             }
