@@ -123,6 +123,22 @@ public:
         Postcondition: Outputs the list of free node indices managed by NodePool.
 ------------------------------------------------------------------------------*/
 
+    void sort();
+    /*--------------------------------------------------------------------------
+        Sorts the list in ascending order
+
+        Precondition:  List elements must be comparable with the > operator.
+        Postcondition: List is sorted in ascending order.
+------------------------------------------------------------------------------*/
+
+    int size() const;
+    /*--------------------------------------------------------------------------
+        Returns the size of the list
+
+        Precondition:  None.
+        Postcondition: List size is returned.
+------------------------------------------------------------------------------*/
+
 private:
     NodePool<ElementType> nodePool; // NodePool object to store data
     int first;                      // first element in the list
@@ -291,7 +307,6 @@ int ArrayBasedList<ElementType>::search(const ElementType &data) const
         }
         position++; // increment logical position
     }
-
     // data not found
     return NULL_INDEX;
 }
@@ -318,6 +333,50 @@ template <typename ElementType>
 void ArrayBasedList<ElementType>::displayFreeNodes(ostream &out) const
 {
     nodePool.displayFree(out); // call nodePool method to display free nodes
+}
+
+// Definition of displayFreeNodes()
+template <typename ElementType>
+void ArrayBasedList<ElementType>::sort()
+{
+    if (first != NULL_INDEX)
+    {
+        int size = 0; // size of the list
+
+        // Loop through the entire list
+        for (int i = first; i != NULL_INDEX; i = nodePool.getNextOfNode(i))
+        {
+            size++;
+        }
+
+        for (int i = 0; i < size - 1; i++)
+        {
+            // Loop through the entire list
+            for (int i = first; nodePool.getNextOfNode(i) != NULL_INDEX; i = nodePool.getNextOfNode(i))
+            {
+                if (nodePool.getNodeData(i) >
+                    nodePool.getNodeData(nodePool.getNextOfNode(i))) // pool[i] > pool[i + 1]
+                {
+                    // switch
+                    nodePool.switchOrderOfNodes(i, nodePool.getNextOfNode(i));
+                }
+            }
+        }
+    }
+}
+
+// Definition of search()
+template <typename ElementType>
+int ArrayBasedList<ElementType>::size() const
+{
+    int size = 0; // size of the list
+
+    // Loop through the entire list
+    for (int i = first; i != NULL_INDEX; i = nodePool.getNextOfNode(i))
+    {
+        size++;
+    }
+    return size;
 }
 
 // Overload operator<< to display list elements

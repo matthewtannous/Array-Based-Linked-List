@@ -21,7 +21,7 @@
 #include "NodePool.h"
 #include "ArrayBasedList.h"
 
-typedef string ElementType;
+typedef int ElementType;
 
 void displayMenu();
 /*------------------------------------------------------------------------------
@@ -62,11 +62,14 @@ int main()
         switch (choice)
         {
         case 1: // Insert
+            // Get position
             cout << "Enter The Position: ";
             position = getInput();
+            // Get value
             cout << "Enter the value you want to insert: ";
             cin >> value;
 
+            // Insert
             result = list.insertAtPosition(value, position, false);
             cout << (result ? "Inserted Successfully."
                             : "Insertion Failed.")
@@ -74,19 +77,24 @@ int main()
             break;
 
         case 2: // Force Insert
+            // Get position
             cout << "Enter The Position: ";
             position = getInput();
+            // Get value
             cout << "Enter the value you want to insert: ";
             cin >> value;
 
+            // Insert
             list.insertAtPosition(value, position, true);
             cout << "Inserted Successfully.\n";
             break;
 
         case 3: // Delete
+            // Get position
             cout << "Enter position to delete: ";
             position = getInput();
 
+            // Delete
             result = list.deleteAtPosition(position);
 
             cout << (result ? "Deleted Successfully."
@@ -95,8 +103,11 @@ int main()
             break;
 
         case 4: // Search
+            // Get value
             cout << "Enter value to search for:";
             cin >> value;
+
+            // Search for value
             position = list.search(value);
             if (position != -1)
                 cout << "Found at position " << position << endl;
@@ -114,11 +125,20 @@ int main()
                  << endl;
             break;
 
-        case 7: // Display free nodes
+        case 7: // Display size
+            cout << "List size: " << list.size() << endl;
+            break;
+
+        case 8: // Display free nodes
             list.displayFreeNodes(cout);
             break;
 
-        case 8: // Exit
+        case 9: // sort
+            list.sort();
+            cout << "List has been sorted.\n";
+            break;
+
+        case 10: // Exit
             cout << "Exiting program..." << endl;
             return 0;
 
@@ -140,8 +160,10 @@ void displayMenu()
          << "4. Search for a Value\n"
          << "5. Display List\n"
          << "6. Check if List is Empty\n"
-         << "7. display free Nodes\n"
-         << "8. Exit\n"
+         << "7. Get list size\n"
+         << "8. display free Nodes\n"
+         << "9. Sort List\n"
+         << "10. Exit\n"
          << "Choose an option: ";
 }
 

@@ -177,6 +177,16 @@ public:
         Postcondition: The node at position 'index' has its data field set to
                        'data'.
 ------------------------------------------------------------------------------*/
+
+    void switchOrderOfNodes(int node1, int node2);
+    /*--------------------------------------------------------------------------
+        Switch the data of nodes at indexes node1 and node2
+
+        Precondition:  0 <= node1 < CAPACITY and 0 <= node2 < CAPACITY
+        Postcondition: The nodes at positions node1 and node2 have their data
+                       switched.
+------------------------------------------------------------------------------*/
+
 private:
     Node nodePool[CAPACITY]; // Pool nodes containing data
     int freeHead;            // Index of first free node in the linked free list
@@ -312,6 +322,15 @@ template <typename ElementType>
 void NodePool<ElementType>::setNodeData(int index, const ElementType &data)
 {
     nodePool[index].data = data; // change data of node at index
+}
+
+// Definition of setNodeData()
+template <typename ElementType>
+void NodePool<ElementType>::switchOrderOfNodes(int node1, int node2)
+{
+    ElementType temp = nodePool[node1].data;
+    nodePool[node1].data = nodePool[node2].data;
+    nodePool[node2].data = temp;
 }
 
 #endif
