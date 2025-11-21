@@ -1,13 +1,16 @@
 /*-- main.cpp ------------------------------------------------------------------
   Interactive tester for ArrayBasedList<T> and NodePool<T>.
 
-  This menu-driven program allows the instructor to test:
-    • Insert at position
-    • Delete at position
+  This menu-driven program allows the user to test:
+    • Insert in the list
+    • Delete from the list
     • Search for a value
     • Display the list
     • Check if list is empty
     • Show free and used nodes inside NodePool
+    • Sort the list
+    • Get the list size
+
 
  * Precondition: None. Program begins execution with no required initial state.
 
@@ -16,8 +19,11 @@
 
   All memory allocation happens inside a fixed-size NodePool.
 
-  NOTE: The program assumes all values to be inserted into the list are of type
-        ElementType. 
+  NOTES:
+    The program assumes all values to be inserted into the list are of type
+        ElementType.
+    This program needs to run on a newer version of C++ in order to properly
+        use the function stoi()
 ------------------------------------------------------------------------------*/
 
 #include <iostream>
@@ -32,6 +38,22 @@ void displayMenu();
 
     Precondition:  None.
     Postcondition: Menu is displayed.
+------------------------------------------------------------------------------*/
+
+void displayInsertMenu();
+/*------------------------------------------------------------------------------
+    Display the menu of insert actions to perform on the list
+
+    Precondition:  None.
+    Postcondition: Insert menu is displayed.
+------------------------------------------------------------------------------*/
+
+void displayDeleteMenu();
+/*------------------------------------------------------------------------------
+    Display the menu of delete actions to perform on the list
+
+    Precondition:  None.
+    Postcondition: Delete menu is displayed.
 ------------------------------------------------------------------------------*/
 
 int getInput();
@@ -59,50 +81,194 @@ int main()
 
         // Declare variables used for list operations
         int position;
-        ElementType value;
+        ElementType value, target;
         bool result;
 
         switch (choice)
         {
         case 1: // Insert
             // Get position
-            cout << "Enter The Position: ";
-            position = getInput();
-            // Get value
-            cout << "Enter the value you want to insert: ";
-            cin >> value;
+            displayInsertMenu();
 
-            // Insert
-            result = list.insertAtPosition(value, position, false);
-            cout << (result ? "Inserted Successfully."
-                            : "Insertion Failed.")
-                 << endl;
+            // Get type of insertion from user (3 total choices)
+            do
+            {
+                choice = getInput();
+                if (choice < 1 || choice > 3)
+                {
+                    cerr << "Choice must be 1, 2 or 3\n";
+                }
+            } while (choice < 1 || choice > 3);
+
+            switch (choice)
+            {
+            case 1: // Insert at position
+                cout << "Enter The Position: ";
+                position = getInput();
+                // Get value
+                cout << "Enter the value you want to insert: ";
+                cin >> value;
+
+                // Insert
+                result = list.insertAtPosition(value, position, false);
+                cout << (result ? "Inserted Successfully."
+                                : "Insertion Failed.")
+                     << endl;
+                break;
+
+            case 2: // Insert Before Value
+                // Get value to insert before
+                cout << "Enter the value before which you want to insert the new node:\n ";
+                cin >> target;
+
+                // Get new value
+                cout << "Enter the new value to insert: \n";
+                cin >> value;
+
+                // Insert
+                result = list.insertBeforeValue(value, target, false);
+                cout << (result ? "Inserted Successfully."
+                                : "Insertion failed.")
+                     << endl;
+                break;
+
+            case 3: // Insert After value
+                // Get value to insert after
+                cout << "Enter the value after which you want to insert the new node: ";
+                cin >> target;
+
+                // Get new value
+                cout << "Enter the new value to insert: \n";
+                cin >> value;
+
+                // Insert
+                result = list.insertAfterValue(value, target, false);
+                cout << (result ? "Inserted Successfully."
+                                : "Insertion failed.")
+                     << endl;
+                break;
+            }
             break;
 
         case 2: // Force Insert
-            // Get position
-            cout << "Enter The Position: ";
-            position = getInput();
-            // Get value
-            cout << "Enter the value you want to insert: ";
-            cin >> value;
+            displayInsertMenu();
 
-            // Insert
-            list.insertAtPosition(value, position, true);
-            cout << "Inserted Successfully.\n";
+            // Get type of insertion from user (3 total choices)
+            do
+            {
+                choice = getInput();
+                if (choice < 1 || choice > 3)
+                {
+                    cerr << "Choice must be 1, 2 or 3\n";
+                }
+            } while (choice < 1 || choice > 3);
+
+            switch (choice)
+            {
+            case 1: // Insert at position
+                // Get position
+                cout << "Enter The Position: ";
+                position = getInput();
+                // Get value
+                cout << "Enter the value you want to insert: ";
+                cin >> value;
+
+                // Insert
+                result = list.insertAtPosition(value, position, true);
+                cout << (result ? "Inserted Successfully."
+                                : "Insertion Failed.")
+                     << endl;
+                break;
+
+            case 2: // Insert Before Value
+                // Get value to insert before
+                cout << "Enter the value before which you want to insert the new node:\n ";
+                cin >> target;
+
+                // Get new value
+                cout << "Enter the new value to insert: \n";
+                cin >> value;
+
+                // Insert
+                result = list.insertBeforeValue(value, target, true);
+                cout << (result ? "Inserted Successfully."
+                                : "Insertion failed.")
+                     << endl;
+                break;
+
+            case 3: // Insert After value
+                // Get value to insert after
+                cout << "Enter the value after which you want to insert the new node: ";
+                cin >> target;
+
+                // Get new value
+                cout << "Enter the new value to insert: \n";
+                cin >> value;
+
+                // Insert
+                result = list.insertAfterValue(value, target, true);
+                cout << (result ? "Inserted Successfully."
+                                : "Insertion failed.")
+                     << endl;
+                break;
+            }
             break;
 
         case 3: // Delete
-            // Get position
-            cout << "Enter position to delete: ";
-            position = getInput();
+            displayDeleteMenu();
 
-            // Delete
-            result = list.deleteAtPosition(position);
+            // Get type of deletion from user (4 total choices)
+            do
+            {
+                choice = getInput();
+                if (choice < 1 || choice > 4)
+                {
+                    cerr << "Choice must be 1, 2, 3 or 4\n";
+                }
+            } while (choice < 1 || choice > 4);
+            switch (choice)
+            {
+            case 1: // Delete at position
+                // Get position
+                cout << "Enter position to delete: ";
+                position = getInput();
 
-            cout << (result ? "Deleted Successfully."
-                            : "Deletion failed.")
-                 << endl;
+                // Delete
+                result = list.deleteAtPosition(position);
+
+                cout << (result ? "Deleted Successfully."
+                                : "Deletion failed.")
+                     << endl;
+                break;
+            case 2: // Delete before value
+                cout << "Enter the value which you want to delete the node before: \n";
+                cin >> target;
+
+                result = list.deleteBeforeValue(target);
+                cout << (result ? "Deleted Successfully."
+                                : "Deletion failed.")
+                     << endl;
+                break;
+
+            case 3: // Delete value
+                cout << "Enter the value you want to delete: \n";
+                cin >> value;
+                result = list.deleteValue(value);
+                cout << (result ? "Deleted Successfully."
+                                : "Deletion Failed")
+                     << endl;
+                break;
+
+            case 4: // Delete after value
+                cout << "Enter the value after which you want to delete the next node: \n";
+                cin >> target;
+
+                result = list.deleteAfterValue(target);
+                cout << (result ? "Deleted Successfully."
+                                : "Deletion failed.")
+                     << endl;
+                break;
+            }
             break;
 
         case 4: // Search
@@ -156,10 +322,10 @@ int main()
 void displayMenu()
 {
     cout << "\n=== Array-Based List Tester ===\n"
-         << "1.  Insert at Position (Does not insert if list is full)\n"
-         << "2. Force Insert at Position"
+         << "1.  Insert (Does not insert if list is full)\n"
+         << "2.  Force insert"
          << " (Deletes first element if list is full)\n"
-         << "3.  Delete at Position\n"
+         << "3.  Delete\n"
          << "4.  Search for a Value\n"
          << "5.  Display List\n"
          << "6.  Check if List is Empty\n"
@@ -194,4 +360,23 @@ int getInput()
             cerr << "ERROR: Please input a postive integer.\n";
         }
     }
+}
+
+void displayInsertMenu()
+{
+    cout << "\n=== Insert Menu ===\n"
+         << "1. Insert at position\n"
+         << "2. Insert before value\n"
+         << "3. Insert after value\n"
+         << "Choose an option: ";
+}
+
+void displayDeleteMenu()
+{
+    cout << "\n=== Delete Menu ===\n"
+         << "1. Delete at position\n"
+         << "2. Delete before value\n"
+         << "3. Delete value\n"
+         << "4. Delete after value\n"
+         << "Choose an option: ";
 }

@@ -15,7 +15,7 @@
         setNextOfNode: Updates the next index of a specific node.
         getNodeData: Returns the data stored in a specific node.
         setNodeData: Sets the data stored in a specific node.
-        switchOrderOfNodes: Switch the content of two nodes
+        switchOrderOfNodes: Switch the content of two nodes.
 
 
     Class Invariant:

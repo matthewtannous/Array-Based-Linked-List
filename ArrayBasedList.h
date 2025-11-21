@@ -141,6 +141,60 @@ public:
         Postcondition: List size is returned.
 ------------------------------------------------------------------------------*/
 
+    bool insertAfterValue(const ElementType &value, const ElementType &target, bool forced);
+    /*--------------------------------------------------------------------------
+        Insert a new element after the first occurrence of a target.
+
+        Precondition:  target must exist in the list.
+
+        Postcondition: A new node with `value` is linked immediately after target;
+                 returns true on success, false if target not found.
+                 If the list is full and insertion is not forced, insertion does not
+                  happen and returns false.
+                 If the list is full and insertion is forced, insertion removes the
+                 first element in the list and then inserts the element and
+                 returns true.
+------------------------------------------------------------------------------*/
+
+    bool insertBeforeValue(const ElementType &value, const ElementType &target, bool forced);
+    /*--------------------------------------------------------------------------
+        Insert a new element before the first occurrence of a target.
+
+        Precondition:  List not empty, target exists.
+
+        Postcondition: A new node with `value` is linked immediately before target;
+                     returns true on success, false if key not found.
+                     if the list is full and insertion is not forced, insertion does not
+                     happen and returns false.
+                     if the list is full and insertion is forced, insertion removes the
+                     first element in the list and then inserts the element and
+                     returns true.
+    --------------------------------------------------------------------------*/
+
+    bool deleteAfterValue(const ElementType &target);
+    /*--------------------------------------------------------------------------
+        Delete the node after the first occurrence of the target.
+
+        Precondition:  target must exist and not be the last node.
+        Postcondition: The node after the target is removed.
+------------------------------------------------------------------------------*/
+
+    bool deleteBeforeValue(const ElementType &target);
+    /*--------------------------------------------------------------------------
+        Remove the node before the first occurrence of the target.
+
+        Precondition:  target must exist and not be the first node.
+        Postcondition: The node before the target is removed.
+------------------------------------------------------------------------------*/
+
+    bool deleteValue(const ElementType &value);
+    /*--------------------------------------------------------------------------
+        Remove the first occurrence of the value from the list.
+
+        Precondition:  Value must exist in the list.
+        Postcondition: The value is removed from the list.
+------------------------------------------------------------------------------*/
+
 private:
     NodePool<ElementType> nodePool; // NodePool object to store data
     int first;                      // first element in the list
@@ -389,6 +443,226 @@ ostream &operator<<(ostream &out, ArrayBasedList<ElementType> list)
 {
     list.display(out);
     return out;
+}
+
+template <typename ElementType>
+bool ArrayBasedList<ElementType>::insertAfterValue(const ElementType &value,
+                                                   const ElementType &target,
+                                                   bool forced)
+{
+    if (first == NULL_INDEX) // list is empty
+        return false;
+
+    // Traverse the list to find target
+    for (int i = first; i != NULL_INDEX; i = nodePool.getNextOfNode(i))
+    {
+        if (nodePool.getNodeData(i) == target) // Found target, now insert after it
+        {
+            int newNode = nodePool.acquireNode();
+
+            if (newNode == NULL_INDEX) // List is Full
+            {
+                if (forced) // replace data of first node with new data (faster than removing node at 0 then inserting node at 0)
+                {
+                    if (i == first)
+                    {
+                        nodePool.setNodeData(first, value); // change data of first
+                        return true;
+                    }
+                    int other = first; // temporary index for deletion
+                    // point first to the second element in the list
+                    first = nodePool.getNextOfNode(first);
+
+                    newNode = other;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            // new node points to what target was pointing to
+            nodePool.setNode(newNode, value, nodePool.getNextOfNode(i));
+
+            // target now points to new node
+            nodePool.setNextOfNode(i, newNode);
+            return true;
+        }
+    }
+    // Target not found
+    return false;
+}
+
+template <typename ElementType>
+bool ArrayBasedList<ElementType>::insertBeforeValue(const ElementType &value,
+                                                    const ElementType &target, bool forced)
+{
+    // List empty
+    if (first == NULL_INDEX)
+        return false;
+
+    // Case 1: target is in the first node
+    if (nodePool.getNodeData(first) == target)
+    {
+        int newNode = nodePool.acquireNode();
+        if (newNode == NULL_INDEX)
+        {               // list full {
+            if (forced) // replace data of first node with new data (faster than removing node at 0 then inserting node at 0)
+            {
+                nodePool.setNodeData(first, value); // change data of first
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        nodePool.setNode(newNode, value, first);
+        first = newNode;
+        return true;
+    }
+
+    // Case 2: target is in middle or end
+    int prev = first;
+    int curr = nodePool.getNextOfNode(first);
+
+    while (curr != NULL_INDEX && nodePool.getNodeData(curr) != target)
+    {
+        prev = curr;
+        curr = nodePool.getNextOfNode(curr);
+    }
+    if (curr == NULL_INDEX)
+        return false; // target not found
+
+    int newNode = nodePool.acquireNode();
+    if (newNode == NULL_INDEX)
+    {
+        if (forced) // replace data of first node with new data (faster than removing node at 0 then inserting node at 0)
+        {
+            int other = first; // temporary index for deletion
+            // point first to the second element in the list
+            first = nodePool.getNextOfNode(first);
+
+            newNode = other;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    // new node stores the given value and points to the current node (curr)
+    nodePool.setNode(newNode, value, curr);
+
+    // previous node now points to the new node, linking it into the list
+    nodePool.setNextOfNode(prev, newNode);
+    return true;
+}
+
+template <typename ElementType>
+bool ArrayBasedList<ElementType>::deleteAfterValue(const ElementType &target)
+{
+    if (first == NULL_INDEX) // list is empty
+        return false;
+
+    // Traverse the list to find the target
+    for (int i = first; i != NULL_INDEX; i = nodePool.getNextOfNode(i))
+    {
+        if (nodePool.getNodeData(i) == target)
+        {
+            int nodeToDelete = nodePool.getNextOfNode(i); // node after target
+
+            if (nodeToDelete == NULL_INDEX)
+            { // target is the last
+                return false;
+            }
+
+            // Link target node to the node after nodeToDelete
+            nodePool.setNextOfNode(i, nodePool.getNextOfNode(nodeToDelete));
+
+            // Release the deleted node back to the NodePool
+            nodePool.releaseNode(nodeToDelete);
+            return true;
+        }
+    }
+    return false; // Target not found
+}
+
+template <typename ElementType>
+bool ArrayBasedList<ElementType>::deleteBeforeValue(const ElementType &target)
+{
+    // Case 1: list is empty or first node is the target
+    if (first == NULL_INDEX || nodePool.getNodeData(first) == target)
+    {
+        return false; // nothing to delete
+    }
+
+    // Case 1: target is in the second node
+    int temp = nodePool.getNextOfNode(first);
+    if (temp != NULL_INDEX && nodePool.getNodeData(temp) == target)
+    {
+        int nodeToDelete = first;                // node to delete is the first node
+        first = nodePool.getNextOfNode((first)); // update first to point to the second node
+        nodePool.releaseNode(nodeToDelete);      // release the deleted node back to NodePool
+        return true;
+    }
+
+    // Case 2: target is somewhere in the middle or end
+    int prevPrev = first;                     // node before the node to delete
+    int prev = nodePool.getNextOfNode(first); // node to  delete
+    int curr = nodePool.getNextOfNode(prev);  // current node being checked
+
+    // Traverse until target is found or end of list
+    while (curr != NULL_INDEX && nodePool.getNodeData(curr) != target)
+    {
+        prevPrev = prev;
+        prev = curr;
+        curr = nodePool.getNextOfNode(curr);
+    }
+    if (curr != NULL_INDEX)
+    {                                                                   // target found
+        nodePool.setNextOfNode(prevPrev, nodePool.getNextOfNode(prev)); // skip the node before target
+        nodePool.releaseNode(prev);                                     // release deleted node back to NodePool
+        return true;
+    }
+    return false; // target not found or no node to delete
+}
+
+// Delete first occurrence of a node with the given value
+
+template <typename ElementType>
+bool ArrayBasedList<ElementType>::deleteValue(const ElementType &value)
+{
+    if (first == NULL_INDEX)
+    { // list is empty
+        return false;
+    }
+
+    // Special case: value is in the first node
+    if (nodePool.getNodeData(first) == value)
+    {
+        int temp = first;
+        first = nodePool.getNextOfNode(first); // move head to next node
+        nodePool.releaseNode(temp);            // release the deleted node
+        return true;
+    }
+
+    // Traverse the list to find the node before the one to delete
+    int prev = first;
+    int curr = nodePool.getNextOfNode(first);
+
+    while (curr != NULL_INDEX)
+    {
+        if (nodePool.getNodeData(curr) == value)
+        {
+            // Link previous node to the next of current
+            nodePool.setNextOfNode(prev, nodePool.getNextOfNode(curr));
+            nodePool.releaseNode(curr); // release node
+            return true;
+        }
+        prev = curr;
+        curr = nodePool.getNextOfNode((curr));
+    }
+    return false; // Value not found
 }
 
 #endif
