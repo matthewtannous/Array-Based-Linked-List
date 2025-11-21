@@ -55,7 +55,8 @@ public:
         Postcondition: Returns true if the list has no elements, false otherwise.
 ------------------------------------------------------------------------------*/
 
-    bool insertAtPosition(const ElementType &value, int position);
+    bool insertAtPosition(const ElementType &value, int position,
+                          bool forced = false);
     /*--------------------------------------------------------------------------
         Insert a new element at a specified position in the list.
 
@@ -65,8 +66,12 @@ public:
 
         Postcondition:
             The element 'value' is inserted at the given 'position'.
-            Returns true if insertion is successful, false otherwise
-                (invalid position or no free nodes).
+            If the list is not full, insertion happens and returns true.
+            If the list is full and insertion is not forced, insertion does not
+                happen and returns false.
+            If the list is full and insertion is forced, insertion removes the
+                first element in the list and then inserts the element and
+                returns true.
 
         Notes:
             Position 0 inserts at the beginning.
@@ -138,7 +143,7 @@ bool ArrayBasedList<ElementType>::isEmpty() const
 // Definition of insertAtPosition()
 template <typename ElementType>
 bool ArrayBasedList<ElementType>::insertAtPosition(const ElementType &value,
-                                                   int position)
+                                                   int position, bool forced)
 {
     if (position < 0 || position >= CAPACITY) // Invalid index
     {
@@ -164,7 +169,15 @@ bool ArrayBasedList<ElementType>::insertAtPosition(const ElementType &value,
             int newNode = nodePool.acquireNode(); // get free node
             if (newNode == NULL_INDEX)            // list is full
             {
-                return false;
+                if (forced) // replace data of first node with new data (faster than removing node at 0 then inserting node at 0)
+                {
+                    nodePool.setNodeData(first, value); // change data of first
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             // set data of first node and let it point to old first
             nodePool.setNode(newNode, value, first);
@@ -190,7 +203,19 @@ bool ArrayBasedList<ElementType>::insertAtPosition(const ElementType &value,
             int newNode = nodePool.acquireNode(); // get free node
             if (newNode == NULL_INDEX)            // list is full
             {
-                return false;
+                if (forced) // free first then set newNode to it (THERE IS A BETTER WAY TO DO IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+                {
+                    int other = first; // temporary index for deletion
+                    // point first to the second element in the list
+                    first = nodePool.getNextOfNode(first);
+
+                    temp = nodePool.getNextOfNode(temp);
+                    newNode = other;
+                }
+                else
+                {
+                    return false;
+                }
             }
 
             // temp is now the index which we must insert after

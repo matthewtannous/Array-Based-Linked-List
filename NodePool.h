@@ -169,6 +169,14 @@ public:
         Postcondition: Returns the ElementType data stored in nodePool[index].
 ---------------------------------------------------------------------------*/
 
+    void setNodeData(int index, const ElementType &data);
+    /*--------------------------------------------------------------------------
+        Change the data of the node at the specified index.
+
+        Precondition:  0 <= index < CAPACITY.
+        Postcondition: The node at position 'index' has its data field set to
+                       'data'.
+------------------------------------------------------------------------------*/
 private:
     Node nodePool[CAPACITY]; // Pool nodes containing data
     int freeHead;            // Index of first free node in the linked free list
@@ -244,7 +252,7 @@ void NodePool<ElementType>::displayFree(ostream &out) const
 {
     if (freeHead == NULL_INDEX) // NodePool is full
     {
-        out << "List is full. No free nodes.\n";
+        out << "List is full. No free nodes.";
     }
     else
     {
@@ -259,6 +267,7 @@ void NodePool<ElementType>::displayFree(ostream &out) const
             }
         }
     }
+    out << endl;
 }
 
 // Definition of displayInUse()
@@ -296,6 +305,13 @@ template <typename ElementType>
 ElementType NodePool<ElementType>::getNodeData(int index) const
 {
     return nodePool[index].data; // get data of node at index
+}
+
+// Definition of setNodeData()
+template <typename ElementType>
+void NodePool<ElementType>::setNodeData(int index, const ElementType &data)
+{
+    nodePool[index].data = data; // change data of node at index
 }
 
 #endif

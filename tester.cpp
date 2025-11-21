@@ -58,6 +58,7 @@ int main()
         int position;
         ElementType value;
         bool result;
+
         switch (choice)
         {
         case 1: // Insert
@@ -66,20 +67,34 @@ int main()
             cout << "Enter the value you want to insert: ";
             cin >> value;
 
-            result = list.insertAtPosition(value, position);
-            cout << (result ? "Inserted Successfully." : "Insertion Failed.") << endl;
+            result = list.insertAtPosition(value, position, false);
+            cout << (result ? "Inserted Successfully."
+                            : "Insertion Failed.")
+                 << endl;
             break;
 
-        case 2: // Delete
+        case 2: // Force Insert
+            cout << "Enter The Position: ";
+            position = getInput();
+            cout << "Enter the value you want to insert: ";
+            cin >> value;
+
+            list.insertAtPosition(value, position, true);
+            cout << "Inserted Successfully.\n";
+            break;
+
+        case 3: // Delete
             cout << "Enter position to delete: ";
             position = getInput();
 
             result = list.deleteAtPosition(position);
 
-            cout << (result ? "Deleted Successfully." : "Deletion failed.") << endl;
+            cout << (result ? "Deleted Successfully."
+                            : "Deletion failed.")
+                 << endl;
             break;
 
-        case 3: // Search
+        case 4: // Search
             cout << "Enter value to search for:";
             cin >> value;
             position = list.search(value);
@@ -89,20 +104,21 @@ int main()
                 cout << "Not Found" << endl;
             break;
 
-        case 4: // Display list
+        case 5: // Display list
             cout << "\nList contents: " << list;
             break;
 
-        case 5: // Check if empty
-            cout << (list.isEmpty() ? "List is empty. " : "List is not empty.") << endl;
+        case 6: // Check if empty
+            cout << (list.isEmpty() ? "List is empty. "
+                                    : "List is not empty.")
+                 << endl;
             break;
 
-        case 6: // Display free nodes
-            cout << "\nFree Nodes: ";
+        case 7: // Display free nodes
             list.displayFreeNodes(cout);
             break;
 
-        case 7: // Exit
+        case 8: // Exit
             cout << "Exiting program..." << endl;
             return 0;
 
@@ -117,13 +133,15 @@ int main()
 void displayMenu()
 {
     cout << "\n=== Array-Based List Tester ===\n"
-         << "1. Insert at Position\n"
-         << "2. Delete at Position\n"
-         << "3. Search for a Value\n"
-         << "4. Display List\n"
-         << "5. Check if List is Empty\n"
-         << "6. display free Nodes\n"
-         << "7. Exit\n"
+         << "1. Insert at Position (Does not insert if list is full)\n"
+         << "2. Force Insert at Position"
+         << " (Deletes first element if list is full)\n"
+         << "3. Delete at Position\n"
+         << "4. Search for a Value\n"
+         << "5. Display List\n"
+         << "6. Check if List is Empty\n"
+         << "7. display free Nodes\n"
+         << "8. Exit\n"
          << "Choose an option: ";
 }
 
