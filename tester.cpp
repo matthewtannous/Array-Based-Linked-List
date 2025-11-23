@@ -118,11 +118,11 @@ int main()
 
             case 2: // Insert Before Value
                 // Get value to insert before
-                cout << "Enter the value before which you want to insert the new node:\n ";
+                cout << "Enter the value before which you want to insert the new node: ";
                 cin >> target;
 
                 // Get new value
-                cout << "Enter the new value to insert: \n";
+                cout << "Enter the new value to insert: ";
                 cin >> value;
 
                 // Insert
@@ -159,7 +159,7 @@ int main()
                 choice = getInput();
                 if (choice < 1 || choice > 3)
                 {
-                    cerr << "Choice must be 1, 2 or 3\n";
+                    cerr << "Choice must be 1, 2 or 3";
                 }
             } while (choice < 1 || choice > 3);
 
@@ -182,7 +182,7 @@ int main()
 
             case 2: // Insert Before Value
                 // Get value to insert before
-                cout << "Enter the value before which you want to insert the new node:\n ";
+                cout << "Enter the value before which you want to insert the new node: ";
                 cin >> target;
 
                 // Get new value
@@ -241,7 +241,7 @@ int main()
                      << endl;
                 break;
             case 2: // Delete before value
-                cout << "Enter the value which you want to delete the node before: \n";
+                cout << "Enter the value which you want to delete the node before: ";
                 cin >> target;
 
                 result = list.deleteBeforeValue(target);
@@ -251,7 +251,7 @@ int main()
                 break;
 
             case 3: // Delete value
-                cout << "Enter the value you want to delete: \n";
+                cout << "Enter the value you want to delete: ";
                 cin >> value;
                 result = list.deleteValue(value);
                 cout << (result ? "Deleted Successfully."
@@ -260,7 +260,7 @@ int main()
                 break;
 
             case 4: // Delete after value
-                cout << "Enter the value after which you want to delete the next node: \n";
+                cout << "Enter the value after which you want to delete the next node: ";
                 cin >> target;
 
                 result = list.deleteAfterValue(target);
@@ -273,7 +273,7 @@ int main()
 
         case 4: // Search
             // Get value
-            cout << "Enter value to search for:";
+            cout << "Enter value to search for: ";
             cin >> value;
 
             // Search for value

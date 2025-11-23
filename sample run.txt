@@ -1,0 +1,234 @@
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 1
+
+=== Insert Menu ===
+1. Insert at position
+2. Insert before value
+3. Insert after value
+Choose an option: 1
+Enter The Position: 0
+Enter the value you want to insert: 100
+Inserted Successfully.
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 1
+
+=== Insert Menu ===
+1. Insert at position
+2. Insert before value
+3. Insert after value
+Choose an option: 1
+Enter The Position: 0
+Enter the value you want to insert: 1
+Inserted Successfully.
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 1
+
+=== Insert Menu ===
+1. Insert at position
+2. Insert before value
+3. Insert after value
+Choose an option: 1
+Enter The Position: 1
+Enter the value you want to insert: 1
+Inserted Successfully.
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 1
+
+=== Insert Menu ===
+1. Insert at position
+2. Insert before value
+3. Insert after value
+Choose an option: 1
+Enter The Position: 1
+Enter the value you want to insert: 1
+Inserted Successfully.
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 1
+
+=== Insert Menu ===
+1. Insert at position
+2. Insert before value
+3. Insert after value
+Choose an option: 5  
+Choice must be 1, 2 or 3
+2
+Enter the value before which you want to insert the new node: 1
+Enter the new value to insert: 123
+Inserted Successfully.
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 5
+
+List contents: 123, 1, 1, 1, 100
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 9
+List has been sorted.
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 5
+
+List contents: 1, 1, 1, 100, 123
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 3
+
+=== Delete Menu ===
+1. Delete at position
+2. Delete before value
+3. Delete value
+4. Delete after value
+Choose an option: 1
+Enter position to delete: 4
+Deleted Successfully.
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 5
+
+List contents: 1, 1, 1, 100
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 7
+List size: 4
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 8
+Free nodes: 0, 5, 6, 7, 8, 9
+
+=== Array-Based List Tester ===
+1.  Insert (Does not insert if list is full)
+2.  Force insert (Deletes first element if list is full)
+3.  Delete
+4.  Search for a Value
+5.  Display List
+6.  Check if List is Empty
+7.  Get list size
+8.  display free Nodes
+9.  Sort List
+10. Exit
+Choose an option: 10
+Exiting program...
