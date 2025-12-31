@@ -26,7 +26,7 @@
 #define ARRAYBASEDLIST_H
 
 #include <iostream>
-#include "nodePool.h"
+#include "NodePool.h"
 
 using namespace std;
 
